@@ -1,0 +1,73 @@
+class Book:
+    def __init__(self, title, author, isbn):
+        self.title = title
+        self.author = author
+        self.isbn = isbn
+
+    def display(self):
+        print(f"Titlu: {self.title}, Autor: {self.author}, ISBN: {self.isbn}")
+
+
+class Library:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, book):
+        self.books.append(book)
+        print(f"Cartea '{book.title}' a fost adăugată în bibliotecă.")
+
+    def remove_book(self, isbn):
+        for book in self.books:
+            if book.isbn == isbn:
+                self.books.remove(book)
+                print(f"Cartea cu ISBN {isbn} a fost eliminată din bibliotecă.")
+                return
+        print(f"Nicio carte cu ISBN {isbn} nu a fost găsită în bibliotecă.")
+
+    def display_books(self):
+        if not self.books:
+            print("Nicio carte în bibliotecă.")
+        else:
+            print("Cărți în bibliotecă:")
+            for book in self.books:
+                book.display()
+
+
+def main():
+    biblioteca = Library()
+
+    # Adăugare de 5 cărți inițiale
+    carti_initiale = [
+        Book("Carte 1", "Autor 1", "111-1-11111-111-1"),
+        Book("Carte 2", "Autor 2", "222-2-22222-222-2"),
+        Book("Carte 3", "Autor 3", "333-3-33333-333-3"),
+        Book("Carte 4", "Autor 4", "444-4-44444-444-4"),
+        Book("Carte 5", "Autor 5", "555-5-55555-555-5"),
+    ]
+
+    for carte in carti_initiale:
+        biblioteca.add_book(carte)
+
+    while True:
+        print("Comenzi disponibile: 'adauga', 'sterge', 'afiseaza', 'iesire'")
+        comanda = input("Introdu comanda: ")
+
+        if comanda == "adauga":
+            titlu = input("Introdu titlu: ")
+            autor = input("Introdu autor: ")
+            isbn = input("Introdu ISBN: ")
+
+            carte = Book(titlu, autor, isbn)
+            biblioteca.add_book(carte)
+        elif comanda == "sterge":
+            isbn = input("Introdu ISBN-ul cărții de eliminat: ")
+            biblioteca.remove_book(isbn)
+        elif comanda == "afiseaza":
+            biblioteca.display_books()
+        elif comanda == "iesire":
+            break
+        else:
+            print("Comandă invalidă. Încearcă din nou.")
+
+if __name__ == "__main__":
+    main()
